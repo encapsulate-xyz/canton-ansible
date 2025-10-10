@@ -1,0 +1,12 @@
+---
+# maintains mainnet inventory grouped by project names
+all:
+  vars:
+    env: devnet
+  children:
+    canton:
+      hosts:
+        participant.canton.mainnet.encapsulate.xyz:
+          type: participant
+        validator.canton.mainnet.encapsulate.xyz:
+          type: validator
