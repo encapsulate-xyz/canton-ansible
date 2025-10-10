@@ -16,25 +16,18 @@ default_node_types:
 
 tmp_dir: /tmp
 
-go:
-  root: /usr/local/go
-  path: "{{ tmp_dir }}/go"
-  module111: "on"
+postgres:
+  user: postgres
+  password: "{{ vault.default.psql_db_password }}"
+  server: localhost
+  port: 5432
 
-sui:
-  validator:
-    source_url: https://releases.sui.io
+canton:
+  participant:
+    source_url: ghcr.io/digital-asset/decentralized-canton-sync/docker/canton-participant
     ports:
-      server_listen_port: 9191
-      metrics_port: 9186
-  fullnode:
-    version: 88888888888
-    source_url: https://releases.sui.io
-    ports:
-      server_listen_port: 9191
-      metrics_port: 9186
-  bridge:
-    source_url: https://releases.sui.io
-    ports:
-      server_listen_port: 9191
-      metrics_port: 9186
+      grpc_port: 5061
+      admin_port: 5002
+      ledger_port: 5001
+      http_ledger_port: 7575
+      metrics_port: 10013

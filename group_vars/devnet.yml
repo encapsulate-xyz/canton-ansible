@@ -1,0 +1,11 @@
+---
+# maintains versions and can overwrite all.yml
+canton:
+  migration_id: "0"
+  admin_user: ledger-api-user
+  auth_jwks_url: ""
+  auth_target_audience: "https://ledger_api.example.com"
+  participant:
+    version: 0.4.19
+  validator:
+    version: 0.4.19
