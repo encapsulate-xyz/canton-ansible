@@ -1,0 +1,54 @@
+---
+- name: Create participant docker container and copy binary
+  vars:
+    container_name: participant
+  block:
+    - name: Create temporary participant container for binary extraction
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        image: "{{ canton.participant.source_url }}:{{ canton.participant.version }}"
+        state: present
+        recreate: true
+
+    - name: Copy participant binary
+      ansible.builtin.shell: >
+        docker cp {{ container_name }}:/app/bin/{{ participant_service_default_binary_name }} 
+        {{ participant_bin_dir }}/{{ service_identifier }}
+      args:
+        executable: /bin/bash
+      register: copy_result
+      changed_when: copy_result.rc == 0
+      failed_when:
+        - copy_result.rc != 0
+        - "'No such container' in copy_result.stderr"
+      notify:
+        - Restart service
+
+    - name: Copy participant jar file
+      ansible.builtin.shell: >
+        docker cp {{ container_name }}:/app/lib/{{ participant_service_default_jar_file_name }}
+        {{ participant_lib_dir }}/{{ participant_service_default_jar_file_name }}
+      args:
+        executable: /bin/bash
+      register: copy_result
+      changed_when: copy_result.rc == 0
+      failed_when:
+        - copy_result.rc != 0
+        - "'No such container' in copy_result.stderr"
+      notify:
+        - Restart service
+
+    - name: Ensure participant binary has the correct permissions
+      ansible.builtin.file:
+        path: "{{ participant_bin_dir }}/{{ service_identifier }}"
+        owner: root
+        group: root
+        mode: "0755"
+      notify:
+        - Restart service
+
+  always:
+    - name: Remove participant container
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        state: absent
