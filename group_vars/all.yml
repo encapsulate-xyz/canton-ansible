@@ -16,6 +16,8 @@ default_node_types:
 
 tmp_dir: /tmp
 
+java_home: /usr/lib/jvm/java-21-openjdk-amd64
+
 postgres:
   user: postgres
   password: "{{ vault.default.psql_db_password }}"
@@ -31,3 +33,11 @@ canton:
       ledger_port: 5001
       http_ledger_port: 7575
       metrics_port: 10013
+  validator: 
+    source_url: ghcr.io/digital-asset/decentralized-canton-sync/docker/validator-app
+    ports:
+      grpc_port: 5061
+      admin_port: 5003
+      ledger_port: 5001
+      http_ledger_port: 7575
+      metrics_port: 10014
