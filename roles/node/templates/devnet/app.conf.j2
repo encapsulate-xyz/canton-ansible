@@ -1,0 +1,72 @@
+include required(file("{{ node_storage_config_file_path }}"))
+
+_client_credentials_auth_config {
+  type = "client-credentials"
+  well-known-config-url = ${?SPLICE_APP_VALIDATOR_LEDGER_API_AUTH_URL}
+  client-id = ${?SPLICE_APP_VALIDATOR_LEDGER_API_AUTH_CLIENT_ID}
+  client-secret = ${?SPLICE_APP_VALIDATOR_LEDGER_API_AUTH_CLIENT_SECRET}
+  # TODO(DACH-NY/canton-network-internal#502) use actual audience of the target participant
+  audience = "{{ canton.auth_target_audience }}"
+  scope = ${?SPLICE_APP_VALIDATOR_LEDGER_API_AUTH_SCOPE}
+}
+
+_onboarding {
+  sv-client.admin-api.address = "{{ canton.sponsor_address }}"
+}
+
+_scan {
+  admin-api.address = "{{ canton.sponsor_address }}"
+}
+
+canton {
+  validator-apps {
+    validator_backend {
+      storage = ${_storage}
+      admin-api = {
+        address = "0.0.0.0"
+        port = {{ canton.validator.ports.admin_port }}
+      }
+      participant-client = {
+        admin-api = {
+          address = participant
+          port = 5002
+        }
+        ledger-api = {
+          client-config = {
+            address = participant
+            port = 5001
+          }
+          auth-config = ${_client_credentials_auth_config}
+        }
+      }
+      ledger-api-user = ledger-api-user
+      validator-wallet-users.0 = administrator
+      validator-party-hint = Encapsulate-1
+      auth {
+        algorithm = "rs-256"
+        audience = ${SPLICE_APP_VALIDATOR_AUTH_AUDIENCE}
+        jwks-url = ${SPLICE_APP_VALIDATOR_AUTH_JWKS_URL}
+        connection-timeout = ${?SPLICE_APP_VALIDATOR_AUTH_JWKS_CONNECTION_TIMEOUT}
+        read-timeout = ${?SPLICE_APP_VALIDATOR_AUTH_JWKS_READ_TIMEOUT}
+      }
+      app-instances {
+      }
+      onboarding = {
+        sv-client.admin-api.url = ${_onboarding.sv-client.admin-api.address}
+        secret = {{ vault.devnet.onboarding_secret }}
+      }
+      domains {
+        global {
+          alias = "global"
+        }
+      }
+      sv-validator = ${?SPLICE_APP_VALIDATOR_SV_VALIDATOR}
+      sv-user = ${?SPLICE_APP_SV_LEDGER_API_AUTH_USER_NAME}
+      contact-point = ""
+      canton-identifier-config = {
+        participant = Encapsulate-1
+      }
+    }
+  }
+  features.enable-testing-commands = yes
+}

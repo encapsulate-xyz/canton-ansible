@@ -1,0 +1,7 @@
+---
+node_ufw_rules:
+  - port: "{{ canton.validator.ports.metrics_port }}"
+    proto: tcp
+    rule: allow
+    from: any
+    comment: metrics_port
