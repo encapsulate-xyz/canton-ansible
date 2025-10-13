@@ -11,14 +11,31 @@
     state: present
     enabled: true
 
-- name: Install Docker
+- name: Install required packages
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present
     update_cache: true
   loop:
+    - openjdk-21-jdk
+    - postgresql
+    - python3-psycopg2
     - docker-ce
     - docker-ce-cli
     - containerd.io
     - docker-buildx-plugin
     - docker-compose-plugin
+
+- name: Ensure PostgreSQL service is started
+  ansible.builtin.service:
+    name: postgresql
+    state: started
+    enabled: true
+
+- name: Set password for postgres user
+  community.postgresql.postgresql_user:
+    name: postgres
+    password: "{{ postgres.password }}"
+    state: present
+  become: true
+  become_user: postgres

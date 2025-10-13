@@ -7,6 +7,9 @@
   ansible.builtin.include_tasks: tasks/apply_ufw_rules.yml
   loop: "{{ app_ufw_rules }}"
 
+- name: Include setup deps task
+  ansible.builtin.include_tasks: tasks/setup_deps.yml
+
 - name: Include user creation task
   ansible.builtin.include_tasks: tasks/create_user_and_directories.yml
   vars:
