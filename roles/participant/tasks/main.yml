@@ -28,7 +28,6 @@
     group: "{{ service_identifier }}"
     mode: "0644"
   loop:
-    - { src: "logback.xml", dest: "{{ participant_logback_config_file_path }}" }
     - { src: "parameters.conf", dest: "{{ participant_parameters_config_file_path }}" }
     - { src: "storage.conf", dest: "{{ participant_storage_config_file_path }}" }
   notify:

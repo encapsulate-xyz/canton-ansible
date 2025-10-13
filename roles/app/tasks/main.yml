@@ -28,7 +28,6 @@
     group: "{{ service_identifier }}"
     mode: "0644"
   loop:
-    - { src: "logback.xml", dest: "{{ app_logback_config_file_path }}" }
     - { src: "parameters.conf", dest: "{{ app_parameters_config_file_path }}" }
     - { src: "storage.conf", dest: "{{ app_storage_config_file_path }}" }
     - { src: "bootstrap.sc", dest: "{{ app_bootstrap_config_file_path }}" }

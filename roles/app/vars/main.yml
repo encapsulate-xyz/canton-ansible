@@ -6,7 +6,6 @@ app_app_config_file_name: app.conf
 app_parameters_config_file_name: parameters.conf
 app_storage_config_file_name: storage.conf
 app_monitor_config_file_name: monitor.conf
-app_logback_config_file_name: logback.xml
 app_additional_config_file_name: additional-config.conf
 app_bootstrap_config_file_name: bootstrap.sc
 app_bootstrap_entrypoint_file_name: bootstrap-entrypoint.sc

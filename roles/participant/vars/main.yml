@@ -6,7 +6,6 @@ participant_app_config_file_name: app.conf
 participant_parameters_config_file_name: parameters.conf
 participant_storage_config_file_name: storage.conf
 participant_monitor_config_file_name: monitor.conf
-participant_logback_config_file_name: logback.xml
 participant_additional_config_file_name: additional-config.conf
 
 # binary names

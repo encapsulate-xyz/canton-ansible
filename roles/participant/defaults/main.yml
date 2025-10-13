@@ -25,4 +25,3 @@ participant_monitor_config_file_path: "{{ participant_config_dir }}/{{ participa
 participant_parameters_config_file_path: "{{ participant_config_dir }}/{{ participant_parameters_config_file_name }}"
 participant_storage_config_file_path: "{{ participant_config_dir }}/{{ participant_storage_config_file_name }}"
 participant_additional_config_file_path: "{{ participant_config_dir }}/{{ participant_additional_config_file_name }}"
-participant_logback_config_file_path: "{{ participant_config_dir }}/{{ participant_logback_config_file_name }}"
