@@ -15,7 +15,7 @@ canton {
       reporters = [{
         type = prometheus
         address = "0.0.0.0"
-        port = {{ canton.validator.ports.metrics_port }}
+        port = {{ canton.app.ports.metrics_port }}
       }]
       # Raised to allow for per domain member labels (e.g. daml.sequencer.traffic-control.event-delivered-cost, see #16410)
       cardinality = 20000

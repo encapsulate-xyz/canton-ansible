@@ -1,10 +1,10 @@
 ---
-- name: Set up canton validator node
+- name: Set up canton validator app
   hosts: all
   become: true
   gather_facts: true
   vars:
-    allowed_node_types: [validator]
+    allowed_node_types: [app]
   vars_files:
     - group_vars/all.yml
     - group_vars/vault.yml
@@ -18,12 +18,12 @@
           ansible.builtin.include_tasks: tasks/setup_environment.yml
 
   tasks:
-    - name: Run node role
+    - name: Run app role
       when: type in allowed_node_types
       block:
         - name: Include common handlers
           ansible.builtin.include_role:
             name: common
-        - name: Include node role
+        - name: Include app role
           ansible.builtin.include_role:
-            name: node
+            name: app

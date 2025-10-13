@@ -1,4 +1,4 @@
-include required(file("{{ node_storage_config_file_path }}"))
+include required(file("{{ app_storage_config_file_path }}"))
 
 _client_credentials_auth_config {
   type = "client-credentials"
@@ -24,7 +24,7 @@ canton {
       storage = ${_storage}
       admin-api = {
         address = "0.0.0.0"
-        port = {{ canton.validator.ports.admin_port }}
+        port = {{ canton.app.ports.admin_port }}
       }
       participant-client = {
         admin-api = {

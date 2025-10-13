@@ -33,7 +33,7 @@ canton:
       ledger_port: 5001
       http_ledger_port: 7575
       metrics_port: 10013
-  validator: 
+  app: 
     source_url: ghcr.io/digital-asset/decentralized-canton-sync/docker/validator-app
     ports:
       grpc_port: 5061

@@ -1,0 +1,32 @@
+---
+# maintains directories and paths
+app_home_dir: /opt/{{ service_identifier }}
+
+app_bin_dir: "{{ app_home_dir }}/bin"
+app_config_dir: "{{ app_home_dir }}/config"
+app_env_dir: "{{ app_home_dir }}/environment"
+app_data_dir: "{{ app_home_dir }}/data"
+app_lib_dir: "{{ app_home_dir }}/lib"
+app_log_dir: "{{ app_home_dir }}/log"
+
+app_directories:
+  - "{{ app_home_dir }}"
+  - "{{ app_bin_dir }}"
+  - "{{ app_config_dir }}"
+  - "{{ app_data_dir }}"
+  - "{{ app_env_dir }}"
+  - "{{ app_lib_dir }}"
+  - "{{ app_log_dir }}"
+
+app_log_file_path: "{{ app_log_dir }}/{{ service_identifier }}.log"
+
+app_environment_general_file_path: "{{ app_env_dir }}/{{ app_environment_general_file_name }}"
+
+app_app_config_file_path: "{{ app_config_dir }}/{{ app_app_config_file_name }}"
+app_monitor_config_file_path: "{{ app_config_dir }}/{{ app_monitor_config_file_name }}"
+app_parameters_config_file_path: "{{ app_config_dir }}/{{ app_parameters_config_file_name }}"
+app_storage_config_file_path: "{{ app_config_dir }}/{{ app_storage_config_file_name }}"
+app_additional_config_file_path: "{{ app_config_dir }}/{{ app_additional_config_file_name }}"
+app_logback_config_file_path: "{{ app_config_dir }}/{{ app_logback_config_file_name }}"
+app_bootstrap_config_file_path: "{{ app_config_dir }}/{{ app_bootstrap_config_file_name }}"
+app_bootstrap_entrypoint_file_path: "{{ app_config_dir }}/{{ app_bootstrap_entrypoint_file_name }}"

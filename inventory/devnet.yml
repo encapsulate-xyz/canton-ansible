@@ -8,5 +8,5 @@ all:
       hosts:
         participant.canton.mainnet.encapsulate.xyz:
           type: participant
-        validator.canton.mainnet.encapsulate.xyz:
-          type: validator
+        app.canton.mainnet.encapsulate.xyz:
+          type: app

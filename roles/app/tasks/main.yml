@@ -5,14 +5,14 @@
 
 - name: Apply UFW rules for each node type
   ansible.builtin.include_tasks: tasks/apply_ufw_rules.yml
-  loop: "{{ node_ufw_rules }}"
+  loop: "{{ app_ufw_rules }}"
 
 - name: Include user creation task
   ansible.builtin.include_tasks: tasks/create_user_and_directories.yml
   vars:
-    home: "{{ node_home_dir }}"
-    directories: "{{ node_directories }}"
-    log_file_path: "{{ node_log_file_path }}"
+    home: "{{ app_home_dir }}"
+    directories: "{{ app_directories }}"
+    log_file_path: "{{ app_log_file_path }}"
 
 - name: Include extract binaries task
   ansible.builtin.include_tasks: extract_binaries.yml
@@ -25,11 +25,11 @@
     group: "{{ service_identifier }}"
     mode: "0644"
   loop:
-    - { src: "logback.xml", dest: "{{ node_logback_config_file_path }}" }
-    - { src: "parameters.conf", dest: "{{ node_parameters_config_file_path }}" }
-    - { src: "storage.conf", dest: "{{ node_storage_config_file_path }}" }
-    - { src: "bootstrap.sc", dest: "{{ node_bootstrap_config_file_path }}" }
-    - { src: "bootstrap_entrypoint.sc", dest: "{{ node_bootstrap_entrypoint_file_path }}" }
+    - { src: "logback.xml", dest: "{{ app_logback_config_file_path }}" }
+    - { src: "parameters.conf", dest: "{{ app_parameters_config_file_path }}" }
+    - { src: "storage.conf", dest: "{{ app_storage_config_file_path }}" }
+    - { src: "bootstrap.sc", dest: "{{ app_bootstrap_config_file_path }}" }
+    - { src: "bootstrap_entrypoint.sc", dest: "{{ app_bootstrap_entrypoint_file_path }}" }
   notify:
     - Restart service
 
@@ -41,10 +41,10 @@
     group: "{{ service_identifier }}"
     mode: "0644"
   loop:
-    - { src: "app.conf.j2", dest: "{{ node_app_config_file_path }}" }
-    - { src: "monitor.conf.j2", dest: "{{ node_monitor_config_file_path }}" }
-    - { src: "additional_config.conf.j2", dest: "{{ node_additional_config_file_path }}" }
-    - { src: "general.env.j2", dest: "{{ node_environment_general_file_path }}" }
+    - { src: "app.conf.j2", dest: "{{ app_app_config_file_path }}" }
+    - { src: "monitor.conf.j2", dest: "{{ app_monitor_config_file_path }}" }
+    - { src: "additional_config.conf.j2", dest: "{{ app_additional_config_file_path }}" }
+    - { src: "general.env.j2", dest: "{{ app_environment_general_file_path }}" }
   notify:
     - Restart service
 

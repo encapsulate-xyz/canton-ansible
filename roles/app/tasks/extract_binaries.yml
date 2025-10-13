@@ -1,19 +1,19 @@
 ---
-- name: Create validator docker container and copy binary
+- name: Create validator app docker container and copy binary
   vars:
-    container_name: validator
+    container_name: validator_app
   block:
-    - name: Create temporary validator container for binary extraction
+    - name: Create temporary validator app container for binary extraction
       community.docker.docker_container:
         name: "{{ container_name }}"
-        image: "{{ canton.validator.source_url }}:{{ canton.validator.version }}"
+        image: "{{ canton.app.source_url }}:{{ canton.app.version }}"
         state: present
         recreate: true
 
-    - name: Copy validator binary
+    - name: Copy validator app binary
       ansible.builtin.shell: >
-        docker cp {{ container_name }}:/app/splice-node/bin/{{ node_service_default_binary_name }} 
-        {{ node_bin_dir }}/{{ service_identifier }}
+        docker cp {{ container_name }}:/app/splice-node/bin/{{ app_service_default_binary_name }} 
+        {{ app_bin_dir }}/{{ service_identifier }}
       args:
         executable: /bin/bash
       register: copy_result
@@ -26,8 +26,8 @@
 
     - name: Copy validator jar file
       ansible.builtin.shell: >
-        docker cp {{ container_name }}:/app/splice-node/lib/{{ node_service_default_jar_file_name }}
-        {{ node_lib_dir }}/{{ node_service_default_jar_file_name }}
+        docker cp {{ container_name }}:/app/splice-node/lib/{{ app_service_default_jar_file_name }}
+        {{ app_lib_dir }}/{{ app_service_default_jar_file_name }}
       args:
         executable: /bin/bash
       register: copy_result
@@ -40,7 +40,7 @@
 
     - name: Ensure validator binary has the correct permissions
       ansible.builtin.file:
-        path: "{{ node_bin_dir }}/{{ service_identifier }}"
+        path: "{{ app_bin_dir }}/{{ service_identifier }}"
         owner: root
         group: root
         mode: "0755"
@@ -48,7 +48,7 @@
         - Restart service
 
   always:
-    - name: Remove validator container
+    - name: Remove validator app container
       community.docker.docker_container:
         name: "{{ container_name }}"
         state: absent
