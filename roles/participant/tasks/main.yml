@@ -20,19 +20,6 @@
 - name: Include extract binaries task
   ansible.builtin.include_tasks: extract_binaries.yml
 
-- name: Copy configuration files
-  ansible.builtin.copy:
-    src: "{{ env }}/{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: "{{ service_identifier }}"
-    group: "{{ service_identifier }}"
-    mode: "0644"
-  loop:
-    - { src: "parameters.conf", dest: "{{ participant_parameters_config_file_path }}" }
-    - { src: "storage.conf", dest: "{{ participant_storage_config_file_path }}" }
-  notify:
-    - Restart service
-
 - name: Copy configuration template files
   ansible.builtin.template:
     src: "{{ env }}/{{ item.src }}"

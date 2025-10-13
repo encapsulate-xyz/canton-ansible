@@ -1,5 +1,3 @@
-include required(file("{{ participant_storage_config_file_path }}"))
-
 canton {
   features {
     enable-preview-commands = yes
@@ -12,6 +10,10 @@ canton {
     # a large number of participants.
     timeouts.processing.verify-active = 40.seconds
     timeouts.processing.slow-future-warn = 20.seconds
+    timeouts.processing.sequenced-event-processing-bound = 10m
+    startup-memory-check-config {
+      reporting-level = "ignore"
+    }
   }
 
   # Bumping because our topology state can get very large due to
@@ -35,9 +37,10 @@ canton {
         address = "0.0.0.0"
         port = {{ canton.participant.ports.grpc_port }}
       }
-      storage = ${_storage}
       storage {
+        type = postgres
         config {
+           dataSourceClass = "org.postgresql.ds.PGSimpleDataSource"
            properties = {
              serverName = {{ postgres.server }}
              portNumber = {{ postgres.port }}
@@ -45,9 +48,11 @@ canton {
              currentSchema = participant
              user = {{ postgres.user }}
              password = "{{ postgres.password }}"
+             tcpKeepAlive = true
            }
          }
          parameters {
+           migrate-and-start = true
            max-connections = 32
          }
        }
