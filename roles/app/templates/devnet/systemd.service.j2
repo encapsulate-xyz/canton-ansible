@@ -1,0 +1,27 @@
+[Unit]
+Description={{ service_identifier }}
+
+[Service]
+User={{ service_identifier }}
+Group={{ project }}
+WorkingDirectory={{ app_home_dir }}
+EnvironmentFile={{ app_environment_general_file_path }}
+ExecStart={{ app_bin_dir }}/{{ service_identifier }} \
+daemon --no-tty \
+--log-level-stdout=DEBUG \
+--log-level-canton=DEBUG \
+--log-file-appender=off \
+--config {{ app_app_config_file_path }} \
+--config {{ app_monitor_config_file_path }} \
+--config {{ app_additional_config_file_path }} \
+--bootstrap {{ app_bootstrap_entrypoint_file_path }}
+
+Restart=always
+RestartSec=4
+LimitNOFILE=65536
+MemoryMax=64G
+StandardOutput=append:{{ app_log_file_path }}
+StandardError=inherit
+
+[Install]
+WantedBy=multi-user.target

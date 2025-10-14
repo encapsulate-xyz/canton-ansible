@@ -4,11 +4,5 @@ all:
   vars:
     env: testnet
   children:
-    sui:
+    canton:
       hosts:
-        bridge.sui.testnet.encapsulate.xyz:
-          type: bridge
-        validator.sui.testnet.encapsulate.xyz:
-          type: validator
-        fullnode.sui.testnet.encapsulate.xyz:
-          type: fullnode

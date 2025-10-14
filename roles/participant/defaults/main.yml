@@ -1,0 +1,26 @@
+---
+# maintains directories and paths
+participant_home_dir: /opt/{{ service_identifier }}
+
+participant_bin_dir: "{{ participant_home_dir }}/bin"
+participant_config_dir: "{{ participant_home_dir }}/config"
+participant_env_dir: "{{ participant_home_dir }}/environment"
+participant_lib_dir: "{{ participant_home_dir }}/lib"
+participant_log_dir: "{{ participant_home_dir }}/log"
+
+participant_directories:
+  - "{{ participant_home_dir }}"
+  - "{{ participant_bin_dir }}"
+  - "{{ participant_config_dir }}"
+  - "{{ participant_env_dir }}"
+  - "{{ participant_lib_dir }}"
+  - "{{ participant_log_dir }}"
+
+participant_log_file_path: "{{ participant_log_dir }}/{{ service_identifier }}.log"
+
+participant_environment_general_file_path: "{{ participant_env_dir }}/{{ participant_environment_general_file_name }}"
+
+participant_app_config_file_path: "{{ participant_config_dir }}/{{ participant_app_config_file_name }}"
+participant_monitor_config_file_path: "{{ participant_config_dir }}/{{ participant_monitor_config_file_name }}"
+
+participant_lib_file_path: "{{ participant_lib_dir }}/{{ participant_service_default_jar_file_name }}"

@@ -1,0 +1,13 @@
+---
+# maintains file name, binary names, and anything which is not a directory or path
+
+# config file names
+participant_app_config_file_name: app.conf
+participant_monitor_config_file_name: monitor.conf
+
+# binary names
+participant_service_default_binary_name: canton
+participant_service_default_jar_file_name: canton-enterprise-{{ canton.participant.jar_ext }}.jar
+
+# Environment file names
+participant_environment_general_file_name: "{{ service_identifier }}.env"

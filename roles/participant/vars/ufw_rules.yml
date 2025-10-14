@@ -1,0 +1,7 @@
+---
+participant_ufw_rules:
+  - port: "{{ canton.participant.ports.metrics_port }}"
+    proto: tcp
+    rule: allow
+    from: "{{ monitor_server_dns }}"
+    comment: metrics_port

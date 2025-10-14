@@ -1,0 +1,73 @@
+_client_credentials_auth_config {
+  type = "client-credentials"
+  well-known-config-url = "{{ canton.app.auth_wellknown_url }}"
+  client-id = {{ canton.app.client_id }}
+  client-secret = {{ vault.devnet.app.client_secret }}
+  # TODO(DACH-NY/canton-network-internal#502) use actual audience of the target participant
+  audience = "{{ canton.participant.target_audience }}"
+  scope = ${?SPLICE_APP_VALIDATOR_LEDGER_API_AUTH_SCOPE}
+}
+
+_onboarding {
+  sv-client.admin-api.address = "{{ canton.app.sponsor_address }}"
+}
+
+_scan {
+  admin-api.address = "{{ canton.app.scan_address }}"
+}
+
+canton {
+  validator-apps {
+    validator_backend {
+      admin-api = {
+        address = "0.0.0.0"
+        port = {{ canton.app.ports.admin_port }}
+      }
+      participant-client = {
+        admin-api = {
+          address = localhost
+          port = {{ canton.participant.ports.admin_port }}
+        }
+        ledger-api = {
+          client-config = {
+            address = localhost
+            port = {{ canton.participant.ports.ledger_port }}
+          }
+          auth-config = ${_client_credentials_auth_config}
+        }
+      }
+      ledger-api-user = "{{ canton.app.admin_user_id }}"
+      validator-wallet-users.0 = "{{ canton.app.wallet_user }}"
+      validator-party-hint = {{ canton.app.party_hint }}
+      auth {
+        algorithm = "rs-256"
+        audience = "{{ canton.app.auth_audience }}"
+        jwks-url = "{{ canton.app.auth_jwks_url }}"
+        connection-timeout = ${?SPLICE_APP_VALIDATOR_AUTH_JWKS_CONNECTION_TIMEOUT}
+        read-timeout = ${?SPLICE_APP_VALIDATOR_AUTH_JWKS_READ_TIMEOUT}
+      }
+      app-instances {
+      }
+      onboarding = {
+        sv-client.admin-api.url = ${_onboarding.sv-client.admin-api.address}
+        secret = {{ vault.devnet.app.onboarding_secret }}
+      }
+      domains {
+        global {
+          alias = "global"
+        }
+      }
+      sv-validator = ${?SPLICE_APP_VALIDATOR_SV_VALIDATOR}
+      sv-user = ${?SPLICE_APP_SV_LEDGER_API_AUTH_USER_NAME}
+      contact-point = "{{ contact_email }}"
+      canton-identifier-config = {
+        participant = {{ canton.app.participant_id }}
+      }
+    }
+  }
+  features.enable-testing-commands = yes
+
+  # TODO(DACH-NY/canton-network-internal#2125) Revisit timeouts on 3.4
+  # Note: This is the client-side request timeout
+  parameters.timeouts.request-timeout = 20 minutes
+}

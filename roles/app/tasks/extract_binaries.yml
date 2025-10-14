@@ -1,0 +1,54 @@
+---
+- name: Create validator app docker container and copy binary
+  vars:
+    container_name: validator_app
+  block:
+    - name: Create temporary validator app container for binary extraction
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        image: "{{ canton.app.source_url }}:{{ canton.app.version }}"
+        state: present
+        recreate: true
+
+    - name: Copy validator app binary
+      ansible.builtin.shell: >
+        docker cp {{ container_name }}:/app/splice-node/bin/{{ app_service_default_binary_name }} 
+        {{ app_bin_dir }}/{{ service_identifier }}
+      args:
+        executable: /bin/bash
+      register: copy_result
+      changed_when: copy_result.rc == 0
+      failed_when:
+        - copy_result.rc != 0
+        - "'No such container' in copy_result.stderr"
+      notify:
+        - Restart service
+
+    - name: Copy validator jar file
+      ansible.builtin.shell: >
+        docker cp {{ container_name }}:/app/splice-node/lib/{{ app_service_default_jar_file_name }}
+        {{ app_lib_file_path }}
+      args:
+        executable: /bin/bash
+      register: copy_result
+      changed_when: copy_result.rc == 0
+      failed_when:
+        - copy_result.rc != 0
+        - "'No such container' in copy_result.stderr"
+      notify:
+        - Restart service
+
+    - name: Ensure validator binary has the correct permissions
+      ansible.builtin.file:
+        path: "{{ app_bin_dir }}/{{ service_identifier }}"
+        owner: root
+        group: root
+        mode: "0755"
+      notify:
+        - Restart service
+
+  always:
+    - name: Remove validator app container
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        state: absent
