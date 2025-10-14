@@ -30,21 +30,16 @@
   loop:
     - { src: "app.conf.j2", dest: "{{ participant_app_config_file_path }}" }
     - { src: "monitor.conf.j2", dest: "{{ participant_monitor_config_file_path }}" }
-    - { src: "additional_config.conf.j2", dest: "{{ participant_additional_config_file_path }}" }
     - { src: "general.env.j2", dest: "{{ participant_environment_general_file_path }}" }
   notify:
     - Restart service
 
 - name: Ensure databases are created
   community.postgresql.postgresql_db:
-    name: "{{ item }}"
+    name: participant-{{ canton.migration_id }}
     state: present
     login_user: postgres
     login_password: "{{ vault.default.psql_db_password }}"
-  loop: 
-    - validator
-    - participant-{{ canton.migration_id }}
-  become: true
   become_user: postgres
 
 - name: Copy systemd service file

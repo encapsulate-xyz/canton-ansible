@@ -4,11 +4,10 @@
 # config file names
 participant_app_config_file_name: app.conf
 participant_monitor_config_file_name: monitor.conf
-participant_additional_config_file_name: additional-config.conf
 
 # binary names
 participant_service_default_binary_name: canton
-participant_service_default_jar_file_name: canton-enterprise-3.3.0-snapshot.20251002.16115.0.ve33dd8f8.jar
+participant_service_default_jar_file_name: canton-enterprise-{{ canton.participant.jar_ext }}.jar
 
 # Environment file names
 participant_environment_general_file_name: "{{ service_identifier }}.env"

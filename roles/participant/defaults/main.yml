@@ -22,4 +22,5 @@ participant_environment_general_file_path: "{{ participant_env_dir }}/{{ partici
 
 participant_app_config_file_path: "{{ participant_config_dir }}/{{ participant_app_config_file_name }}"
 participant_monitor_config_file_path: "{{ participant_config_dir }}/{{ participant_monitor_config_file_name }}"
-participant_additional_config_file_path: "{{ participant_config_dir }}/{{ participant_additional_config_file_name }}"
+
+participant_lib_file_path: "{{ participant_lib_dir }}/{{ participant_service_default_jar_file_name }}"

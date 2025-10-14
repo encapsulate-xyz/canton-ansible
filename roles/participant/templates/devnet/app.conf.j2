@@ -60,6 +60,14 @@ canton {
       admin-api {
         address = "0.0.0.0"
         port = {{ canton.participant.ports.admin_port }}
+        stream.limits {
+          "com.digitalasset.canton.admin.participant.v30.ParticipantRepairService/ExportAcsOld": 1,
+          "com.digitalasset.canton.admin.participant.v30.PartyManagementService/ExportAcsOld": 1,
+          "com.digitalasset.canton.admin.participant.v30.ParticipantRepairService/ImportAcsOld": 1,
+          "com.digitalasset.canton.admin.participant.v30.ParticipantRepairService/ImportAcs": 1,
+          "com.digitalasset.canton.topology.admin.v30.TopologyManagerReadService/ExportTopologySnapshot": 1,
+          "com.digitalasset.canton.topology.admin.v30.TopologyManagerReadService/ExportTopologySnapshotV2": 1
+        }
       }
 
       init {
@@ -69,13 +77,13 @@ canton {
       ledger-api {
         address = "0.0.0.0"
         port = {{ canton.participant.ports.ledger_port }}
-        user-management-service.additional-admin-user-id = {{ canton.admin_user }}
+        user-management-service.additional-admin-user-id = "{{ canton.participant.admin_user_id }}"
         auth-services = [{
           type = jwt-jwks
-          url = "{{ canton.auth_jwks_url }}"
+          url = "{{ canton.participant.auth_jwks_url }}"
 
           # TODO(DACH-NY/canton-network-internal#502) Use different audiences per participant.
-          target-audience = "{{ canton.auth_target_audience }}"
+          target-audience = "{{ canton.participant.target_audience }}"
         }]
         # We need to bump this because we run one stream per user +
         # polling for domain connections which can add up quite a bit
@@ -92,6 +100,7 @@ canton {
       http-ledger-api.server {
         port = {{ canton.participant.ports.http_ledger_port }}
         address = 0.0.0.0
+        path-prefix = ${?CANTON_PARTICIPANT_JSON_API_SERVER_PATH_PREFIX}
       }
 
       parameters {
@@ -105,6 +114,10 @@ canton {
         }
         # Bump ACS pruning interval to make sure ACS snapshots are available for longer
         journal-garbage-collection-delay = 24h
+        # TODO(DACH-NY/canton-network-internal#2050) Remove once ACS commitment processing does not block anymore.
+        do-not-await-on-checking-incoming-commitments = true
+        # Bump batch size to make acs imports faster
+        batching.max-acs-import-batch-size = 10000
       }
 
       # TODO(DACH-NY/canton-network-node#8331) Tune cache sizes

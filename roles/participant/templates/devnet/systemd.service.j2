@@ -12,8 +12,7 @@ daemon --no-tty \
 --log-level-canton=DEBUG \
 --log-file-appender=off \
 --config {{ participant_app_config_file_path }} \
---config {{ participant_monitor_config_file_path }} \
---config {{ participant_additional_config_file_path }}
+--config {{ participant_monitor_config_file_path }}
 
 Restart=always
 RestartSec=4
