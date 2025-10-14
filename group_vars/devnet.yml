@@ -2,12 +2,21 @@
 # maintains versions and can overwrite all.yml
 canton:
   migration_id: "0"
-  admin_user: ledger-api-user
-  auth_jwks_url: ""
-  auth_target_audience: "https://ledger_api.example.com"
-  validator_auth_audience: "https://validator.example.com"
-  sponsor_address: "https://scan.sv-1.dev.global.canton.network.digitalasset.com"
   participant:
     version: 0.4.20
+    jar_ext: "3.3.0-snapshot.20251007.16123.0.v670c8fae"
+    admin_user_id: "YAn59YABoqHGsDV5XVst3ge30YYUb9cs@clients"
+    auth_jwks_url: "https://dev-coqploudjmtrcag8.us.auth0.com/.well-known/jwks.json"
+    target_audience: https://ledger_api.example.com
   app:
     version: 0.4.20
+    auth_wellknown_url: "https://dev-coqploudjmtrcag8.us.auth0.com/.well-known/openid-configuration"
+    client_id: "YAn59YABoqHGsDV5XVst3ge30YYUb9cs"
+    sponsor_address: "https://scan.sv-1.dev.global.canton.network.digitalasset.com"
+    scan_address: "https://scan.sv-1.dev.global.canton.network.digitalasset.com"
+    admin_user_id: "YAn59YABoqHGsDV5XVst3ge30YYUb9cs@clients"
+    wallet_user: "auth0|68edf9735d315e880487926a"
+    auth_audience: https://validator.example.com
+    auth_jwks_url: "https://dev-coqploudjmtrcag8.us.auth0.com/.well-known/jwks.json"
+    party_hint: "Encapsulate-Devnet-1"
+    participant_id: "Encapsulate-Devnet-1"

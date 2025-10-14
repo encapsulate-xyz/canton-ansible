@@ -5,6 +5,7 @@ org: encapsulate
 domain_regex: ^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$
 monitor_server_dns: monitor.encapsulate.xyz
 ansible_port: 8192
+contact_email: "team@encapsulate.xyz"
 
 architecture_map:
   x86_64: amd64
@@ -36,8 +37,5 @@ canton:
   app: 
     source_url: ghcr.io/digital-asset/decentralized-canton-sync/docker/validator-app
     ports:
-      grpc_port: 5061
       admin_port: 5003
-      ledger_port: 5001
-      http_ledger_port: 7575
       metrics_port: 10014
