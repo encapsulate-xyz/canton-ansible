@@ -20,3 +20,17 @@ canton:
     auth_jwks_url: "https://dev-coqploudjmtrcag8.us.auth0.com/.well-known/jwks.json"
     party_hint: "Encapsulate-Devnet-1"
     participant_id: "Encapsulate-Devnet-1"
+  wallet:
+    version: 0.4.20
+    auth_url: "https://dev-coqploudjmtrcag8.us.auth0.com"
+    client_id: WiKQWSGTL2SUXhJLsX62R9xY5SjC0um8
+    network_name: ""
+    network_url: ""
+    amulet_name: ""
+    amulet_acronym: ""
+    service_name: ""
+    service_acronym: ""
+  cns:
+    version: 0.4.20
+    auth_url: "https://dev-coqploudjmtrcag8.us.auth0.com"
+    client_id: gYozCVaFrD57RJr7m58haoWvUd1JTS7O

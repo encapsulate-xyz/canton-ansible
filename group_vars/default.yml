@@ -1,0 +1,6 @@
+---
+nvm:
+  version: 0.40.1
+
+node:
+  version: v20.19.3

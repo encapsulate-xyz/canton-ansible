@@ -17,6 +17,9 @@ default_node_types:
 
 tmp_dir: /tmp
 
+nvm:
+  path: /opt/nvm
+
 java_home: /usr/lib/jvm/java-21-openjdk-amd64
 
 postgres:
@@ -39,3 +42,9 @@ canton:
     ports:
       admin_port: 5003
       metrics_port: 10014
+  wallet: 
+    ports:
+      listen_port: 5004
+  cns: 
+    ports:
+      listen_port: 5005
