@@ -1,0 +1,46 @@
+---
+- name: Include the specific network's vars file
+  ansible.builtin.include_vars:
+    file: vars/ufw_rules.yml
+
+- name: Apply UFW rules for each node type
+  ansible.builtin.include_tasks: tasks/apply_ufw_rules.yml
+  loop: "{{ cns_ufw_rules }}"
+
+- name: Include user creation task
+  ansible.builtin.include_tasks: tasks/create_user_and_directories.yml
+  vars:
+    home: "{{ cns_home_dir }}"
+    directories: "{{ cns_directories }}"
+    log_file_path: "{{ cns_log_file_path }}"
+
+- name: Copy html files
+  ansible.builtin.copy:
+    src: "{{ env }}/"
+    dest: "{{ cns_bin_dir }}"
+    owner: "{{ service_identifier }}"
+    group: "{{ service_identifier }}"
+    mode: "0644"
+  notify:
+    - Restart service
+
+- name: Copy configuration template files
+  ansible.builtin.template:
+    src: "{{ env }}/config.js.j2"
+    dest: "{{ cns_config_file_path }}"
+    owner: "{{ service_identifier }}"
+    group: "{{ service_identifier }}"
+    mode: "0644"
+  notify:
+    - Restart service
+
+- name: Copy systemd service file
+  ansible.builtin.template:
+    src: "{{ env }}/systemd.service.j2"
+    dest: /etc/systemd/system/{{ service_identifier }}.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Reload service
+    - Restart service
