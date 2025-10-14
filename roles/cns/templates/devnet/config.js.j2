@@ -1,0 +1,28 @@
+window.splice_config = {
+  auth: {
+    algorithm: "rs-256",
+    authority: "{{ canton.cns.auth_url }}",
+    client_id: "{{ canton.cns.client_id }}",
+    token_audience: "{{ canton.app.auth_audience }}",
+  },
+  services: {
+    validator: {
+      url: "https://localhost:{{ canton.app.ports.admin_port }}/api/validator",
+    },
+    wallet: {
+      // URL of the web-ui, used to forward payment workflows to wallet
+      uiUrl:
+        "https://localhost:{{ canton.wallet.ports.listen_port }}" ||
+        window.location.origin.replace(/\b.?ns\b/g, "wallet"),
+    },
+  },
+  pollInterval: "10000",
+  spliceInstanceNames: {
+    networkName: "{{ canton.wallet.network_name }}",
+    networkFaviconUrl: "{{ canton.wallet.network_url }}",
+    amuletName: "{{ canton.wallet.amulet_name }}",
+    amuletNameAcronym: "{{ canton.wallet.amulet_acronym }}",
+    nameServiceName: "{{ canton.wallet.service_name }}",
+    nameServiceNameAcronym: "{{ canton.wallet.service_acronym }}",
+  },
+};

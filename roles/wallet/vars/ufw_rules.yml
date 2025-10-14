@@ -1,0 +1,7 @@
+---
+wallet_ufw_rules:
+  - port: "{{ canton.wallet.ports.listen_port }}"
+    proto: tcp
+    rule: allow
+    from: "{{ monitor_server_dns }}"
+    comment: listen_port

@@ -1,0 +1,17 @@
+---
+# maintains directories and paths
+wallet_home_dir: /opt/{{ service_identifier }}
+
+wallet_bin_dir: "{{ wallet_home_dir }}/bin"
+wallet_log_dir: "{{ wallet_home_dir }}/log"
+
+wallet_directories:
+  - "{{ wallet_home_dir }}"
+  - "{{ wallet_bin_dir }}"
+  - "{{ wallet_log_dir }}"
+
+wallet_log_file_path: "{{ wallet_log_dir }}/{{ service_identifier }}.log"
+
+wallet_config_file_path: "{{ wallet_bin_dir }}/{{ wallet_config_file_name }}"
+
+wallet_nodejs_dir: "{{ nvm.path }}/versions/node/{{ node.version }}/bin"

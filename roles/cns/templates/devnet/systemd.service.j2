@@ -1,0 +1,18 @@
+[Unit]
+Description={{ service_identifier }}
+
+[Service]
+User={{ service_identifier }}
+Group={{ project }}
+WorkingDirectory={{ cns_home_dir }}
+ExecStart={{ cns_nodejs_dir }}/serve -s {{ cns_bin_dir }} \
+-l {{ canton.cns.ports.listen_port }}
+Restart=always
+RestartSec=4
+LimitNOFILE=65536
+MemoryMax=8G
+StandardOutput=append:{{ cns_log_file_path }}
+StandardError=inherit
+
+[Install]
+WantedBy=multi-user.target

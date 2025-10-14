@@ -1,0 +1,17 @@
+---
+# maintains directories and paths
+cns_home_dir: /opt/{{ service_identifier }}
+
+cns_bin_dir: "{{ cns_home_dir }}/bin"
+cns_log_dir: "{{ cns_home_dir }}/log"
+
+cns_directories:
+  - "{{ cns_home_dir }}"
+  - "{{ cns_bin_dir }}"
+  - "{{ cns_log_dir }}"
+
+cns_log_file_path: "{{ cns_log_dir }}/{{ service_identifier }}.log"
+
+cns_config_file_path: "{{ cns_bin_dir }}/{{ cns_config_file_name }}"
+
+cns_nodejs_dir: "{{ nvm.path }}/versions/node/{{ node.version }}/bin"
