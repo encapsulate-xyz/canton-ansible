@@ -34,27 +34,10 @@ canton {
 canton.validator-apps.validator_backend.app-instances={}
 
 canton.validator-apps.validator_backend.scan-client.type = "bft"
-canton.validator-apps.validator_backend.scan-client.seed-urls = [ "{{ canton.sponsor_address }}" ]
+canton.validator-apps.validator_backend.scan-client.seed-urls = [ "{{ canton.app.sponsor_address }}" ]
 
 canton.validator-apps.validator_backend {
     domain-migration-id = {{ canton.migration_id }}
 }
 
 canton.validator-apps.validator_backend.domain-migration-dump-path = "{{ app_data_dir }}/domain_migration_dump.json"
-
-# To disable auth
-
-canton.validator-apps.validator_backend {
-    auth=""
-}
-canton.validator-apps.validator_backend {
-    auth={
-        algorithm = "hs-256-unsafe"
-        audience = "${VALIDATOR_AUTH_AUDIENCE}"
-        secret = "unsafe"
-    }
-}
-canton.validator-apps.validator_backend.participant-client.ledger-api.auth-config=""
-canton.validator-apps.validator_backend.participant-client.ledger-api.auth-config {
-    type="none"
-}

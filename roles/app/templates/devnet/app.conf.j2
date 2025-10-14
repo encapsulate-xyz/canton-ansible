@@ -1,19 +1,19 @@
 _client_credentials_auth_config {
   type = "client-credentials"
-  well-known-config-url = ${?SPLICE_APP_VALIDATOR_LEDGER_API_AUTH_URL}
-  client-id = ${?SPLICE_APP_VALIDATOR_LEDGER_API_AUTH_CLIENT_ID}
-  client-secret = ${?SPLICE_APP_VALIDATOR_LEDGER_API_AUTH_CLIENT_SECRET}
+  well-known-config-url = "{{ canton.app.auth_wellknown_url }}"
+  client-id = {{ canton.app.client_id }}
+  client-secret = {{ vault.devnet.app.client_secret }}
   # TODO(DACH-NY/canton-network-internal#502) use actual audience of the target participant
-  audience = "{{ canton.auth_target_audience }}"
+  audience = "{{ canton.participant.target_audience }}"
   scope = ${?SPLICE_APP_VALIDATOR_LEDGER_API_AUTH_SCOPE}
 }
 
 _onboarding {
-  sv-client.admin-api.address = "{{ canton.sponsor_address }}"
+  sv-client.admin-api.address = "{{ canton.app.sponsor_address }}"
 }
 
 _scan {
-  admin-api.address = "{{ canton.sponsor_address }}"
+  admin-api.address = "{{ canton.app.scan_address }}"
 }
 
 canton {
@@ -25,24 +25,24 @@ canton {
       }
       participant-client = {
         admin-api = {
-          address = participant
-          port = 5002
+          address = localhost
+          port = {{ canton.participant.ports.admin_port }}
         }
         ledger-api = {
           client-config = {
-            address = participant
-            port = 5001
+            address = localhost
+            port = {{ canton.participant.ports.ledger_port }}
           }
           auth-config = ${_client_credentials_auth_config}
         }
       }
-      ledger-api-user = ledger-api-user
-      validator-wallet-users.0 = administrator
-      validator-party-hint = Encapsulate-1
+      ledger-api-user = "{{ canton.app.admin_user_id }}"
+      validator-wallet-users.0 = "{{ canton.app.wallet_user }}"
+      validator-party-hint = {{ canton.app.party_hint }}
       auth {
         algorithm = "rs-256"
-        audience = ${SPLICE_APP_VALIDATOR_AUTH_AUDIENCE}
-        jwks-url = ${SPLICE_APP_VALIDATOR_AUTH_JWKS_URL}
+        audience = "{{ canton.app.auth_audience }}"
+        jwks-url = "{{ canton.app.auth_jwks_url }}"
         connection-timeout = ${?SPLICE_APP_VALIDATOR_AUTH_JWKS_CONNECTION_TIMEOUT}
         read-timeout = ${?SPLICE_APP_VALIDATOR_AUTH_JWKS_READ_TIMEOUT}
       }
@@ -50,7 +50,7 @@ canton {
       }
       onboarding = {
         sv-client.admin-api.url = ${_onboarding.sv-client.admin-api.address}
-        secret = {{ vault.devnet.onboarding_secret }}
+        secret = {{ vault.devnet.app.onboarding_secret }}
       }
       domains {
         global {
@@ -59,11 +59,15 @@ canton {
       }
       sv-validator = ${?SPLICE_APP_VALIDATOR_SV_VALIDATOR}
       sv-user = ${?SPLICE_APP_SV_LEDGER_API_AUTH_USER_NAME}
-      contact-point = ""
+      contact-point = "{{ contact_email }}"
       canton-identifier-config = {
-        participant = Encapsulate-1
+        participant = {{ canton.app.participant_id }}
       }
     }
   }
   features.enable-testing-commands = yes
+
+  # TODO(DACH-NY/canton-network-internal#2125) Revisit timeouts on 3.4
+  # Note: This is the client-side request timeout
+  parameters.timeouts.request-timeout = 20 minutes
 }

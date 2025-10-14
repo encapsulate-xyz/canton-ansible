@@ -50,13 +50,10 @@
 
 - name: Ensure databases are created
   community.postgresql.postgresql_db:
-    name: "{{ item }}"
+    name: validator
     state: present
     login_user: postgres
     login_password: "{{ vault.default.psql_db_password }}"
-  loop: 
-    - validator
-    - node-{{ canton.migration_id }}
   become: true
   become_user: postgres
 
