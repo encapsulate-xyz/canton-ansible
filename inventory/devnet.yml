@@ -1,12 +1,16 @@
 ---
-# maintains mainnet inventory grouped by project names
+# maintains devnet inventory grouped by project names
 all:
   vars:
     env: devnet
   children:
     canton:
       hosts:
-        participant.canton.mainnet.encapsulate.xyz:
+        participant.canton.devnet.encapsulate.xyz:
           type: participant
-        app.canton.mainnet.encapsulate.xyz:
+        app.canton.devnet.encapsulate.xyz:
           type: app
+        wallet.canton.devnet.encapsulate.xyz:
+          type: wallet
+        cns.canton.devnet.encapsulate.xyz:
+          type: cns
