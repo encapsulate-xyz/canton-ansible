@@ -14,15 +14,8 @@
     directories: "{{ cns_directories }}"
     log_file_path: "{{ cns_log_file_path }}"
 
-- name: Copy html files
-  ansible.builtin.copy:
-    src: "{{ env }}/"
-    dest: "{{ cns_bin_dir }}"
-    owner: "{{ service_identifier }}"
-    group: "{{ service_identifier }}"
-    mode: "0644"
-  notify:
-    - Restart service
+- name: Include extract html files task
+  ansible.builtin.include_tasks: extract_html_files.yml
 
 - name: Copy configuration template files
   ansible.builtin.template:

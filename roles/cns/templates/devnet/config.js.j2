@@ -1,13 +1,13 @@
 window.splice_config = {
   auth: {
     algorithm: "rs-256",
-    authority: "{{ canton.ans.auth_url }}",
-    client_id: "{{ canton.ans.client_id }}",
+    authority: "{{ canton.cns.auth_url }}",
+    client_id: "{{ canton.cns.client_id }}",
     token_audience: "{{ canton.app.auth_audience }}",
   },
   services: {
     validator: {
-      url: "https://localhost:{{ canton.app.admin_port }}/api/validator",
+      url: "https://localhost:{{ canton.app.ports.admin_port }}/api/validator",
     },
     wallet: {
       // URL of the web-ui, used to forward payment workflows to wallet

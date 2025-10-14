@@ -1,0 +1,39 @@
+---
+- name: Create cns docker container and copy html files
+  vars:
+    container_name: cns
+  block:
+    - name: Create temporary cns container for html files extraction
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        image: "{{ canton.cns.source_url }}:{{ canton.cns.version }}"
+        state: present
+        recreate: true
+
+    - name: Copy cns html files
+      ansible.builtin.shell: >
+        docker cp {{ container_name }}:/usr/share/nginx/html/. {{ cns_bin_dir }}/
+      args:
+        executable: /bin/bash
+      register: copy_result
+      changed_when: copy_result.rc == 0
+      failed_when:
+        - copy_result.rc != 0
+        - "'No such container' in copy_result.stderr"
+      notify:
+        - Restart service
+
+    - name: Ensure cns html has the correct permissions
+      ansible.builtin.file:
+        path: "{{ cns_bin_dir }}"
+        owner: root
+        group: root
+        recurse: true
+      notify:
+        - Restart service
+
+  always:
+    - name: Remove cns container
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        state: absent

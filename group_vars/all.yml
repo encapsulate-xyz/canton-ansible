@@ -42,9 +42,11 @@ canton:
     ports:
       admin_port: 5003
       metrics_port: 10014
-  wallet: 
+  wallet:
+    source_url: ghcr.io/digital-asset/decentralized-canton-sync/docker/wallet-web-ui
     ports:
       listen_port: 5004
-  cns: 
+  cns:
+    source_url: ghcr.io/digital-asset/decentralized-canton-sync/docker/ans-web-ui
     ports:
       listen_port: 5005
