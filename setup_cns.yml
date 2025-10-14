@@ -1,10 +1,10 @@
 ---
-- name: Set up canton Wallet UI
+- name: Set up canton cns UI
   hosts: all
   become: true
   gather_facts: true
   vars:
-    allowed_node_types: [wallet]
+    allowed_node_types: [cns]
   vars_files:
     - group_vars/all.yml
     - group_vars/vault.yml
@@ -19,12 +19,12 @@
           ansible.builtin.include_tasks: tasks/setup_environment.yml
 
   tasks:
-    - name: Run wallet role
+    - name: Run cns role
       when: type in allowed_node_types
       block:
         - name: Include common handlers
           ansible.builtin.include_role:
             name: common
-        - name: Include wallet role
+        - name: Include cns role
           ansible.builtin.include_role:
-            name: wallet
+            name: cns
