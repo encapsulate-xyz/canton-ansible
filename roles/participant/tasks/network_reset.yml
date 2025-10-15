@@ -1,0 +1,23 @@
+---
+- name: Stop canton services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: stopped
+  loop:
+    - canton-cns
+    - canton-wallet
+    - canton-app
+    - canton-participant
+
+- name: Ensure databases are deleted
+  community.postgresql.postgresql_db:
+    name: "{{ item }}"
+    state: absent
+    login_user: postgres
+    login_password: "{{ vault.default.psql_db_password }}"
+    force: yes
+  become: true
+  become_user: postgres
+  loop:
+    - validator
+    - participant-{{ canton.migration_id }}
