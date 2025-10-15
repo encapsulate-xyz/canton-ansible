@@ -3,3 +3,5 @@
 
 # config file names
 wallet_config_file_name: config.js
+
+wallet_environment_general_file_name: "{{ service_identifier }}.env"
