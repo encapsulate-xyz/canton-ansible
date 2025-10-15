@@ -7,4 +7,4 @@ dependencies:
     default: true
     nvm_commands:
       - nvm use {{ node.version }}
-      - npm install -g yarn --force
+      - npm install -g serve
