@@ -4,6 +4,7 @@ Description={{ service_identifier }}
 [Service]
 User={{ service_identifier }}
 Group={{ project }}
+EnvironmentFile={{ cns_environment_general_file_path }}
 WorkingDirectory={{ cns_home_dir }}
 ExecStart={{ cns_nodejs_dir }}/serve -s {{ cns_bin_dir }} \
 -l {{ canton.cns.ports.listen_port }}

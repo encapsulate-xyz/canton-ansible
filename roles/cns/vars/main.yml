@@ -3,3 +3,5 @@
 
 # config file names
 cns_config_file_name: config.js
+
+cns_environment_general_file_name: "{{ service_identifier }}.env"

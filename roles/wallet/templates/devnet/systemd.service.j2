@@ -4,6 +4,7 @@ Description={{ service_identifier }}
 [Service]
 User={{ service_identifier }}
 Group={{ project }}
+EnvironmentFile={{ wallet_environment_general_file_path }}
 WorkingDirectory={{ wallet_home_dir }}
 ExecStart={{ wallet_nodejs_dir }}/serve -s {{ wallet_bin_dir }} \
 -l {{ canton.wallet.ports.listen_port }}
