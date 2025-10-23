@@ -5,6 +5,7 @@ org: encapsulate
 domain_regex: ^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$
 monitor_server_dns: monitor.encapsulate.xyz
 ansible_port: 8192
+# SPLICE_APP_CONTACT_POINT
 contact_email: "team@encapsulate.xyz"
 
 architecture_map:
