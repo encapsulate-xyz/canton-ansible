@@ -34,7 +34,7 @@ canton {
 canton.validator-apps.validator_backend.app-instances={}
 
 canton.validator-apps.validator_backend.scan-client.type = "bft"
-canton.validator-apps.validator_backend.scan-client.seed-urls = [ "{{ canton.app.sponsor_address }}" ]
+canton.validator-apps.validator_backend.scan-client.seed-urls = [ "{{ canton.app.scan_address }}" ]
 
 canton.validator-apps.validator_backend {
     domain-migration-id = {{ canton.migration_id }}
