@@ -40,8 +40,8 @@ canton.validator-apps.validator_backend {
     domain-migration-id = {{ canton.migration_id }}
 }
 
-canton.validator-apps.validator_backend.domain-migration-dump-path = "{{ app_data_dir }}/domain_migration_dump.json"
-
-{% if migration | default(false) | bool%}
+{% if migration | default(false) | bool %}
 canton.validator-apps.validator_backend.restore-from-migration-dump = "{{ app_data_dir }}/domain_migration_dump.json"
+{% else %}
+canton.validator-apps.validator_backend.domain-migration-dump-path = "{{ app_data_dir }}/domain_migration_dump.json"
 {% endif %}
