@@ -4,6 +4,7 @@
 # config file names
 participant_app_config_file_name: app.conf
 participant_monitor_config_file_name: monitor.conf
+participant_logback_config_file_name: logback.xml
 
 # binary names
 participant_service_default_binary_name: canton

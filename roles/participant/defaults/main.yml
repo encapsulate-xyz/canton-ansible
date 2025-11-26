@@ -24,3 +24,5 @@ participant_app_config_file_path: "{{ participant_config_dir }}/{{ participant_a
 participant_monitor_config_file_path: "{{ participant_config_dir }}/{{ participant_monitor_config_file_name }}"
 
 participant_lib_file_path: "{{ participant_lib_dir }}/{{ participant_service_default_jar_file_name }}"
+
+participant_logback_config_file_path: "{{ participant_config_dir }}/{{ participant_logback_config_file_name }}"

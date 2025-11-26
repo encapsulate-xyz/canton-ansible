@@ -7,6 +7,7 @@ app_monitor_config_file_name: monitor.conf
 app_additional_config_file_name: additional-config.conf
 app_bootstrap_config_file_name: bootstrap.sc
 app_bootstrap_entrypoint_file_name: bootstrap-entrypoint.sc
+app_logback_config_file_name: logback.xml
 
 # binary names
 app_service_default_binary_name: splice-node
