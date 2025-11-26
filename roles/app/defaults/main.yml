@@ -29,3 +29,5 @@ app_bootstrap_config_file_path: "{{ app_config_dir }}/{{ app_bootstrap_config_fi
 app_bootstrap_entrypoint_file_path: "{{ app_config_dir }}/{{ app_bootstrap_entrypoint_file_name }}"
 
 app_lib_file_path: "{{ app_lib_dir }}/{{ app_service_default_jar_file_name }}"
+
+app_logback_config_file_path: "{{ app_config_dir }}/{{ app_logback_config_file_name }}"

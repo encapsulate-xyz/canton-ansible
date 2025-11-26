@@ -8,6 +8,7 @@ WorkingDirectory={{ app_home_dir }}
 EnvironmentFile={{ app_environment_general_file_path }}
 ExecStart={{ app_bin_dir }}/{{ service_identifier }} \
 daemon --no-tty \
+--log-encoder=json \
 --log-level-stdout=DEBUG \
 --log-level-canton=DEBUG \
 --log-file-appender=off \

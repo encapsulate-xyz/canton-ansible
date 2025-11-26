@@ -30,6 +30,7 @@
   loop:
     - { src: "bootstrap.sc", dest: "{{ app_bootstrap_config_file_path }}" }
     - { src: "bootstrap_entrypoint.sc", dest: "{{ app_bootstrap_entrypoint_file_path }}" }
+    - { src: "logback.xml", dest: "{{ app_logback_config_file_path }}" }
   notify:
     - Restart service
 
