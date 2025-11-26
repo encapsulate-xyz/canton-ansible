@@ -32,6 +32,7 @@ canton {
         # Use a higher number of in flight batches to increase throughput
         maximum-in-flight-event-batches = 50
         use-new-connection-pool = false
+        enable-amplification-improvements = true
       }
 
       monitoring.grpc-health-server {
@@ -53,7 +54,6 @@ canton {
            }
          }
          parameters {
-           migrate-and-start = true
            max-connections = 32
          }
        }
