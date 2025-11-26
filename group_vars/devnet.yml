@@ -4,7 +4,7 @@ canton:
   migration_id: "1"
   participant:
     version: 0.5.3
-    jar_ext: "3.4.7"
+    jar_ext: "3.4.8"
     # LEDGER_API_ADMIN_USER
     admin_user_id: "YAn59YABoqHGsDV5XVst3ge30YYUb9cs@clients"
     # AUTH_JWKS_URL
