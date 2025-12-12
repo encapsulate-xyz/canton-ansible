@@ -3,8 +3,8 @@
 canton:
   migration_id: "1"
   participant:
-    version: 0.5.3
-    jar_ext: "3.4.8"
+    version: 0.5.4
+    jar_ext: "3.4.9"
     # LEDGER_API_ADMIN_USER
     admin_user_id: "YAn59YABoqHGsDV5XVst3ge30YYUb9cs@clients"
     # AUTH_JWKS_URL
@@ -12,7 +12,7 @@ canton:
     # LEDGER_API_AUTH_AUDIENCE
     target_audience: https://canton.network.global
   app:
-    version: 0.5.3
+    version: 0.5.4
     # SPLICE_APP_VALIDATOR_LEDGER_API_AUTH_URL
     auth_wellknown_url: "https://dev-coqploudjmtrcag8.us.auth0.com/.well-known/openid-configuration"
     # SPLICE_APP_VALIDATOR_LEDGER_API_AUTH_CLIENT_ID
@@ -26,15 +26,15 @@ canton:
     # SPLICE_APP_VALIDATOR_WALLET_USER_NAME
     wallet_user: "auth0|68edf9735d315e880487926a"
     # SPLICE_APP_VALIDATOR_PARTY_HINT
-    party_hint: "Encapsulate-Devnet-1"
+    party_hint: "Encapsulate-Devnet-2"
     # SPLICE_APP_VALIDATOR_AUTH_AUDIENCE
     auth_audience: https://app.canton.devnet.encapsulate.xyz
     # SPLICE_APP_VALIDATOR_AUTH_JWKS_URL
     auth_jwks_url: "https://dev-coqploudjmtrcag8.us.auth0.com/.well-known/jwks.json"
     # SPLICE_APP_VALIDATOR_PARTICIPANT_IDENTIFIER
-    participant_id: "Encapsulate-Devnet-1"
+    participant_id: "Encapsulate-Devnet-2"
   wallet:
-    version: 0.5.3
+    version: 0.5.4
     auth_url: "https://dev-coqploudjmtrcag8.us.auth0.com"
     client_id: WiKQWSGTL2SUXhJLsX62R9xY5SjC0um8
     network_name: "Canton Network"
@@ -44,6 +44,6 @@ canton:
     service_name: "Canton Name Service"
     service_acronym: "CNS"
   cns:
-    version: 0.5.3
+    version: 0.5.4
     auth_url: "https://dev-coqploudjmtrcag8.us.auth0.com"
     client_id: gYozCVaFrD57RJr7m58haoWvUd1JTS7O

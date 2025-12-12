@@ -50,7 +50,7 @@ canton {
       }
       onboarding = {
         sv-client.admin-api.url = ${_onboarding.sv-client.admin-api.address}
-        secret = {{ vault.devnet.app.onboarding_secret }}
+        secret = {{ onboarding_secret | default(vault.devnet.app.onboarding_secret) }}
       }
       domains {
         global {
