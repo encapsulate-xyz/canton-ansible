@@ -10,10 +10,8 @@ canton {
     # a large number of participants.
     timeouts.processing.verify-active = 40.seconds
     timeouts.processing.slow-future-warn = 20.seconds
+    # Setting from parameters.conf
     timeouts.processing.sequenced-event-processing-bound = 10m
-    startup-memory-check-config {
-      reporting-level = "ignore"
-    }
   }
 
   # Bumping because our topology state can get very large due to
@@ -31,7 +29,7 @@ canton {
         acknowledgement-interval = 10m
         # Use a higher number of in flight batches to increase throughput
         maximum-in-flight-event-batches = 50
-        use-new-connection-pool = false
+        use-new-connection-pool = true
         enable-amplification-improvements = true
       }
 
@@ -50,8 +48,8 @@ canton {
              currentSchema = participant
              user = {{ postgres.user }}
              password = "{{ postgres.password }}"
-             tcpKeepAlive = true
-           }
+             tcpKeepAlive = true           
+          }
          }
          parameters {
            max-connections = 32
@@ -63,9 +61,9 @@ canton {
         port = {{ canton.participant.ports.admin_port }}
         limits.active {
           "com.digitalasset.canton.admin.participant.v30.ParticipantRepairService/ExportAcsOld": 1,
-          "com.digitalasset.canton.admin.participant.v30.PartyManagementService/ExportAcsOld": 1,
+          "com.digitalasset.canton.admin.participant.v30.ParticipantRepairService/ExportAcs": 5,
           "com.digitalasset.canton.admin.participant.v30.ParticipantRepairService/ImportAcsOld": 1,
-          "com.digitalasset.canton.admin.participant.v30.ParticipantRepairService/ImportAcs": 1,
+          "com.digitalasset.canton.admin.participant.v30.ParticipantRepairService/ImportAcs": 5,
           "com.digitalasset.canton.topology.admin.v30.TopologyManagerReadService/ExportTopologySnapshot": 1,
           "com.digitalasset.canton.topology.admin.v30.TopologyManagerReadService/ExportTopologySnapshotV2": 1
         }
