@@ -45,3 +45,13 @@ canton.validator-apps.validator_backend.restore-from-migration-dump = "{{ app_da
 {% else %}
 canton.validator-apps.validator_backend.domain-migration-dump-path = "{{ app_data_dir }}/domain_migration_dump.json"
 {% endif %}
+
+{% if recover_validator | default(false) | bool %}
+canton.validator-apps.validator_backend.participant-bootstrapping-dump {
+  type = file
+  file = "{{ app_identities_dump_file_path }}"
+  new-participant-identifier = "{{ canton.app.participant_id }}"
+}
+
+canton.validator-apps.validator_backend.migrate-validator-party.scan.admin-api.url = "{{ canton.app.scan_address }}"
+{% endif %}

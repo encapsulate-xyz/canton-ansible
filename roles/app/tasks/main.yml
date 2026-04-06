@@ -58,6 +58,16 @@
   become: true
   become_user: postgres
 
+- name: Fetch secrets from HCP Vault and save to files
+  when: fetch_vault_secrets | default(false) | bool
+  block:
+    - name: Fetch identities dump file and save
+      ansible.builtin.include_tasks: tasks/get_and_save_vault_secret.yml
+      vars:
+        vault_secret_source_path: "{{ project }}/{{ org }}/{{ type }}/{{ app_identities_dump_file_name }}"
+        secret_destination_path: "{{ app_identities_dump_file_path }}"
+        secret_type: json
+
 - name: Copy systemd service file
   ansible.builtin.template:
     src: "{{ env }}/systemd.service.j2"

@@ -32,7 +32,7 @@ canton:
     # SPLICE_APP_VALIDATOR_AUTH_JWKS_URL
     auth_jwks_url: "https://dev-coqploudjmtrcag8.us.auth0.com/.well-known/jwks.json"
     # SPLICE_APP_VALIDATOR_PARTICIPANT_IDENTIFIER
-    participant_id: "Encapsulate-Devnet-2"
+    participant_id: "Encapsulate-Devnet-2-recovery-1"
   wallet:
     version: 0.5.17
     auth_url: "https://dev-coqploudjmtrcag8.us.auth0.com"
