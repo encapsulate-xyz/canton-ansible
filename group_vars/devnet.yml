@@ -26,13 +26,13 @@ canton:
     # SPLICE_APP_VALIDATOR_WALLET_USER_NAME
     wallet_user: "auth0|68edf9735d315e880487926a"
     # SPLICE_APP_VALIDATOR_PARTY_HINT
-    party_hint: "Encapsulate-Devnet-2"
+    party_hint: "Encapsulate-Devnet-3"
     # SPLICE_APP_VALIDATOR_AUTH_AUDIENCE
     auth_audience: https://app.canton.devnet.encapsulate.xyz
     # SPLICE_APP_VALIDATOR_AUTH_JWKS_URL
     auth_jwks_url: "https://dev-coqploudjmtrcag8.us.auth0.com/.well-known/jwks.json"
     # SPLICE_APP_VALIDATOR_PARTICIPANT_IDENTIFIER
-    participant_id: "Encapsulate-Devnet-2-recovery-1"
+    participant_id: "Encapsulate-Devnet-3"
   wallet:
     version: 0.5.17
     auth_url: "https://dev-coqploudjmtrcag8.us.auth0.com"
