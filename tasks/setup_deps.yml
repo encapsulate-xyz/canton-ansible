@@ -11,20 +11,20 @@
     state: present
     enabled: true
 
-- name: Install required packages
-  ansible.builtin.apt:
-    name:
-      - openjdk-21-jdk
-      - postgresql
-      - python3-psycopg2
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-      - docker-buildx-plugin
-      - docker-compose-plugin
-    state: present
-    update_cache: true
-    cache_valid_time: 3600
+# - name: Install required packages
+#   ansible.builtin.apt:
+#     name:
+#       - openjdk-21-jdk
+#       - postgresql
+#       - python3-psycopg2
+#       - docker-ce
+#       - docker-ce-cli
+#       - containerd.io
+#       - docker-buildx-plugin
+#       - docker-compose-plugin
+#     state: present
+#     update_cache: true
+#     cache_valid_time: 3600
 
 - name: Ensure PostgreSQL service is started
   ansible.builtin.service:
