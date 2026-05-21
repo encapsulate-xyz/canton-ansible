@@ -12,9 +12,6 @@ canton.validator-apps.validator_backend.storage {
             tcpKeepAlive = true
         } 
     }
-    parameters {
-        migrate-and-start = true
-    } 
 }
 
 canton {
@@ -39,12 +36,6 @@ canton.validator-apps.validator_backend.scan-client.seed-urls = [ "{{ canton.app
 canton.validator-apps.validator_backend {
     domain-migration-id = {{ canton.migration_id }}
 }
-
-{% if migration | default(false) | bool %}
-canton.validator-apps.validator_backend.restore-from-migration-dump = "{{ app_data_dir }}/domain_migration_dump.json"
-{% else %}
-canton.validator-apps.validator_backend.domain-migration-dump-path = "{{ app_data_dir }}/domain_migration_dump.json"
-{% endif %}
 
 {% if recover_validator | default(false) | bool %}
 canton.validator-apps.validator_backend.participant-bootstrapping-dump {

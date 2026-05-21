@@ -60,9 +60,7 @@ canton {
         address = "0.0.0.0"
         port = {{ canton.participant.ports.admin_port }}
         limits.active {
-          "com.digitalasset.canton.admin.participant.v30.ParticipantRepairService/ExportAcsOld": 1,
           "com.digitalasset.canton.admin.participant.v30.ParticipantRepairService/ExportAcs": 5,
-          "com.digitalasset.canton.admin.participant.v30.ParticipantRepairService/ImportAcsOld": 1,
           "com.digitalasset.canton.admin.participant.v30.ParticipantRepairService/ImportAcs": 5,
           "com.digitalasset.canton.topology.admin.v30.TopologyManagerReadService/ExportTopologySnapshot": 1,
           "com.digitalasset.canton.topology.admin.v30.TopologyManagerReadService/ExportTopologySnapshotV2": 1
@@ -74,7 +72,7 @@ canton {
       }
 
       ledger-api {
-        # TODO(DACH-NY/canton-network-internal#2347) Revisit this; we want to avoid users to have to set an exp field in their tokens
+        # TODO(i29736) Revisit this; we want to avoid users to have to set an exp field in their tokens
         max-token-lifetime = Inf
         # Required for pruning
         admin-token-config.admin-claim=true
@@ -85,7 +83,7 @@ canton {
           type = jwt-jwks
           url = "{{ canton.participant.auth_jwks_url }}"
 
-          # TODO(DACH-NY/canton-network-internal#502) Use different audiences per participant.
+          # Should use different audiences per participant: DACH-NY/canton-network-internal#502
           target-audience = "{{ canton.participant.target_audience }}"
         }]
         # We need to bump this because we run one stream per user +
@@ -107,17 +105,27 @@ canton {
       }
 
       parameters {
-        initial-protocol-version = 34
-        # tune the synchronisation protocols contract store cache
         caching {
+          # tune the synchronisation protocols contract store cache
           contract-store {
             maximum-size = 1000 # default 1e6
             expire-after-access = 120s # default 10 minutes
           }
+          # we bump encryption key caching defaults to reduce KMS costs
+          session-encryption-key-cache {
+            sender-cache {
+              maximum-size = 100000 # default is 10000
+              expire-after-timeout = 3600s # default is 10s
+            }
+            receiver-cache {
+              maximum-size = 100000 # default is 10000
+              expire-after-timeout = 3600s # default is 10s
+            }
+          }
         }
         # Bump ACS pruning interval to make sure ACS snapshots are available for longer
         journal-garbage-collection-delay = 24h
-        # TODO(DACH-NY/canton-network-internal#2050) Remove once ACS commitment processing does not block anymore.
+        # TODO(i21502) Remove once ACS commitment processing does not block at all anymore.
         do-not-await-on-checking-incoming-commitments = true
         # trigger catchup if the acs commitment processor has more than configuration acs changes to process
         # this can be useful after longer periods of downtime to avoid hogging resources for acs commitment processing
@@ -126,9 +134,6 @@ canton {
         batching.max-acs-import-batch-size = 10000
       }
 
-      # TODO(DACH-NY/canton-network-node#8331) Tune cache sizes
-      # from https://docs.daml.com/2.8.0/canton/usermanual/performance.html#configuration
-      # tune caching configs of the ledger api server
       ledger-api {
         index-service {
           max-contract-state-cache-size = 1000 # default 1e4
@@ -141,10 +146,6 @@ canton {
           # The default setting assumes 100 tx/s.
           max-transactions-in-memory-fan-out-buffer-size = 200 # default 1000
         }
-        # Restrict the command submission rate (mainly for SV participants, since they are granted unlimited traffic)
-        command-service {
-          max-commands-in-flight = 30 # default = 256
-        }
       }
 
       topology {
@@ -153,4 +154,21 @@ canton {
       }
     }
   }
+}
+
+# TODO(DACH-NY/canton-network-internal#4997) Remove once ACS commitment processor shutdown is quick.
+canton.parameters.timeouts.processing.shutdown-processing = 10m
+
+canton.participants.participant {
+    parameters {
+      commitment-asynchronous-initialization = true
+      # Query the DB instead of the topology cache for commitment queries
+      # which just makes things worse and overloads the node.
+      commitment-use-db-snapshot-for-participant-lookup = true
+    }
+    topology {
+        enable-topology-state-cache-consistency-checks = false
+        use-new-processor = true
+        use-new-client = true
+    }
 }
