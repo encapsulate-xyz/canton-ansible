@@ -8,7 +8,7 @@ participant_logback_config_file_name: logback.xml
 
 # binary names
 participant_service_default_binary_name: canton
-participant_service_default_jar_file_name: canton-enterprise-{{ canton.participant.jar_ext }}.jar
+participant_service_default_jar_file_name: canton-{{ canton.participant.jar_ext }}.jar
 
 # Environment file names
 participant_environment_general_file_name: "{{ service_identifier }}.env"
