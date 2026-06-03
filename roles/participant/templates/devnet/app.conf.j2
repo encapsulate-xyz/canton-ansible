@@ -10,7 +10,7 @@ canton {
     # a large number of participants.
     timeouts.processing.verify-active = 40.seconds
     timeouts.processing.slow-future-warn = 20.seconds
-    # Setting from parameters.conf
+     # Setting from parameters.conf
     timeouts.processing.sequenced-event-processing-bound = 10m
   }
 
@@ -54,6 +54,7 @@ canton {
          parameters {
            max-connections = 32
            migrate-and-start = true
+        repeatable-migrations-paths = [ "filesystem:{{ participant_migration_dir }}" ]
          }
        }
 
