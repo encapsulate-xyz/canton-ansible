@@ -30,6 +30,16 @@
   notify:
     - Restart service
 
+- name: Copy repeatable migrations sql file
+  ansible.builtin.copy:
+    src: "{{ env }}/repeatable-migration.sql"
+    dest: "{{ participant_repeatable_migrations_file_path }}"
+    owner: "{{ service_identifier }}"
+    group: "{{ service_identifier }}"
+    mode: "0644"
+  notify:
+    - Restart service
+
 - name: Copy configuration template files
   ansible.builtin.template:
     src: "{{ env }}/{{ item.src }}"

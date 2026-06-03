@@ -8,6 +8,8 @@ participant_env_dir: "{{ participant_home_dir }}/environment"
 participant_lib_dir: "{{ participant_home_dir }}/lib"
 participant_log_dir: "{{ participant_home_dir }}/log"
 
+participant_migration_dir: "{{ participant_config_dir }}/repeatable-migrations"
+
 participant_directories:
   - "{{ participant_home_dir }}"
   - "{{ participant_bin_dir }}"
@@ -15,6 +17,7 @@ participant_directories:
   - "{{ participant_env_dir }}"
   - "{{ participant_lib_dir }}"
   - "{{ participant_log_dir }}"
+  - "{{ participant_migration_dir }}"
 
 participant_log_file_path: "{{ participant_log_dir }}/{{ service_identifier }}.log"
 
@@ -26,3 +29,5 @@ participant_monitor_config_file_path: "{{ participant_config_dir }}/{{ participa
 participant_lib_file_path: "{{ participant_lib_dir }}/{{ participant_service_default_jar_file_name }}"
 
 participant_logback_config_file_path: "{{ participant_config_dir }}/{{ participant_logback_config_file_name }}"
+
+participant_repeatable_migrations_file_path: "{{ participant_migration_dir }}/{{ participant_repeatable_migrations_file_name }}"
