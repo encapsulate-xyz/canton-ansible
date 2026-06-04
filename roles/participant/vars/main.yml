@@ -5,7 +5,7 @@
 participant_app_config_file_name: app.conf
 participant_monitor_config_file_name: monitor.conf
 participant_logback_config_file_name: logback.xml
-participant_repeatable_migrations_file_name: repeatable-migration.sql
+participant_repeatable_migrations_file_name: R__repeatable-migration.sql
 
 # binary names
 participant_service_default_binary_name: canton
