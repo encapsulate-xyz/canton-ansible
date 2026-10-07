@@ -104,6 +104,12 @@ canton {
         port = {{ canton.participant.ports.http_ledger_port }}
         address = 0.0.0.0
         path-prefix = ${?CANTON_PARTICIPANT_JSON_API_SERVER_PATH_PREFIX}
+        # Bounds for the client-supplied `Request-Timeout` header (value in milliseconds).
+        # Header values are validated against this [lower-bound; upper-bound] window.
+        client-request-timeout {
+          lower-bound = 1s
+          upper-bound = 60s
+        }
       }
 
       parameters {
@@ -125,6 +131,10 @@ canton {
             }
           }
         }
+        commitment-asynchronous-initialization = true
+        # Query the DB instead of the topology cache for commitment queries
+        # which just makes things worse and overloads the node.
+        commitment-use-db-snapshot-for-participant-lookup = true
         # Bump ACS pruning interval to make sure ACS snapshots are available for longer
         journal-garbage-collection-delay = 24h
         # TODO(i21502) Remove once ACS commitment processing does not block at all anymore.
@@ -134,6 +144,8 @@ canton {
         commitment-processor-nr-acs-changes-behind-to-trigger-catch-up = 10000
         # Bump batch size to make acs imports faster
         batching.max-acs-import-batch-size = 10000
+        # purge every hour
+        lsu.purge-obsolete-topology.cron = "0 0 /1 * * ?"
       }
 
       ledger-api {
@@ -146,7 +158,7 @@ canton {
           # applications having to stream transactions from the database is low. Generally, having a 10s buffer is
           # sensible. Therefore, if you expect e.g. a throughput of 20 tx/s, then setting this number to 200 is sensible.
           # The default setting assumes 100 tx/s.
-          max-transactions-in-memory-fan-out-buffer-size = 200 # default 1000
+          max-transactions-in-memory-fan-out-buffer-size = 200 # default 1100
         }
       }
 
@@ -156,21 +168,4 @@ canton {
       }
     }
   }
-}
-
-# Setting from additional-config.conf
-canton.parameters.timeouts.processing.shutdown-processing = 10m
-
-canton.participants.participant {
-    parameters {
-      commitment-asynchronous-initialization = true
-      # Query the DB instead of the topology cache for commitment queries
-      # which just makes things worse and overloads the node.
-      commitment-use-db-snapshot-for-participant-lookup = true
-    }
-    topology {
-        enable-topology-state-cache-consistency-checks = false
-        use-new-processor = true
-        use-new-client = true
-    }
 }
