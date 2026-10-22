@@ -14,4 +14,4 @@
 
   tasks:
     - name: Include command task
-      ansible.builtin.include_tasks: roles/participant/tasks/commands/network_reset.yml
+      ansible.builtin.include_tasks: roles/participant/tasks/network_reset.yml

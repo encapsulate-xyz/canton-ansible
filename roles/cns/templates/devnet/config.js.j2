@@ -7,13 +7,11 @@ window.splice_config = {
   },
   services: {
     validator: {
-      url: "https://localhost:{{ canton.app.ports.admin_port }}/api/validator",
+      url: "https://" + window.location.host + "/api/validator",
     },
     wallet: {
       // URL of the web-ui, used to forward payment workflows to wallet
-      uiUrl:
-        "https://localhost:{{ canton.wallet.ports.listen_port }}" ||
-        window.location.origin.replace(/\b.?ns\b/g, "wallet"),
+      uiUrl: "{{ canton.cns.wallet_ui_url }}",
     },
   },
   pollInterval: "10000",
