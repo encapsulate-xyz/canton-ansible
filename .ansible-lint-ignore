@@ -1,0 +1,10 @@
+# This file contains ignores rule violations for ansible-lint
+group_vars/all.yml yaml[trailing-spaces]
+roles/app/tasks/extract_binaries.yml var-naming[no-role-prefix]
+roles/app/tasks/extract_binaries.yml yaml[trailing-spaces]
+roles/cns/tasks/extract_html_files.yml var-naming[no-role-prefix]
+roles/participant/tasks/extract_binaries.yml var-naming[no-role-prefix]
+roles/participant/tasks/extract_binaries.yml yaml[trailing-spaces]
+roles/participant/tasks/main.yml partial-become[task]
+roles/participant/tasks/network_reset.yml yaml[truthy]
+roles/wallet/tasks/extract_html_files.yml var-naming[no-role-prefix]
