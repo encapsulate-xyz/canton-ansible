@@ -27,3 +27,15 @@
         - name: Include participant role
           ansible.builtin.include_role:
             name: participant
+            public: true
+
+  post_tasks:
+    - name: Verify participant
+      when: type in allowed_node_types
+      block:
+        - name: Include verify service task
+          ansible.builtin.include_tasks: tasks/verify_service.yml
+          vars:
+            log_file_path: "{{ participant_log_file_path }}"
+            # a new participant opens its ledger APIs only after the validator app initialises it, the metrics server opens at startup
+            health_url: "http://localhost:{{ canton.participant.ports.metrics_port }}/-/healthy"

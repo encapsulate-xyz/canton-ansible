@@ -28,3 +28,14 @@
         - name: Include wallet role
           ansible.builtin.include_role:
             name: wallet
+            public: true
+
+  post_tasks:
+    - name: Verify wallet UI
+      when: type in allowed_node_types
+      block:
+        - name: Include verify service task
+          ansible.builtin.include_tasks: tasks/verify_service.yml
+          vars:
+            log_file_path: "{{ wallet_log_file_path }}"
+            health_url: "http://localhost:{{ canton.wallet.ports.listen_port }}/"

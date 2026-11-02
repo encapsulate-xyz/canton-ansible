@@ -28,3 +28,14 @@
         - name: Include cns role
           ansible.builtin.include_role:
             name: cns
+            public: true
+
+  post_tasks:
+    - name: Verify cns UI
+      when: type in allowed_node_types
+      block:
+        - name: Include verify service task
+          ansible.builtin.include_tasks: tasks/verify_service.yml
+          vars:
+            log_file_path: "{{ cns_log_file_path }}"
+            health_url: "http://localhost:{{ canton.cns.ports.listen_port }}/"
