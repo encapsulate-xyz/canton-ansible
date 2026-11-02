@@ -37,5 +37,5 @@
           ansible.builtin.include_tasks: tasks/verify_service.yml
           vars:
             log_file_path: "{{ app_log_file_path }}"
-            version_command: "env JAVA_HOME={{ java_home }} {{ app_bin_dir }}/{{ service_identifier }} --version"
+            version_command: "{{ app_bin_dir }}/{{ service_identifier }} --version"
             health_url: "http://localhost:{{ canton.app.ports.admin_port }}/api/validator/livez"
