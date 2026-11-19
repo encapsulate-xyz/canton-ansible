@@ -34,6 +34,7 @@ canton:
     source_url: ghcr.io/digital-asset/decentralized-canton-sync/docker/canton-participant
     ports:
       grpc_port: 5061
+      http_health_port: 5071
       admin_port: 5002
       ledger_port: 5001
       http_ledger_port: 7575

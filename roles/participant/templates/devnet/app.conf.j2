@@ -1,9 +1,15 @@
 canton {
   features {
-    enable-preview-commands = yes
+    # Splice 0.10.0 disables preview commands by default; the image only needs them for key export
+    enable-preview-commands = {{ 'yes' if canton.participant.enable_key_download | default(false) | bool else 'no' }}
     enable-testing-commands = yes
+    # Splice 0.10.0 disables the repair service by default (needed for ACS import / identities dump restore)
+    enable-repair-commands = {{ 'yes' if (canton.participant.enable_repair_commands | default(false) | bool or recover_validator | default(false) | bool) else 'no' }}
   }
   parameters {
+{% if canton.participant.enable_key_download | default(false) | bool %}
+    enable-key-download = yes
+{% endif %}
     manual-start = no
     non-standard-config = yes
     # Bumping because our topology state can get very large due to
@@ -36,6 +42,11 @@ canton {
       monitoring.grpc-health-server {
         address = "0.0.0.0"
         port = {{ canton.participant.ports.grpc_port }}
+      }
+      # Splice 0.10.0 health checks use the HTTP endpoints /health/live and /health/ready
+      monitoring.http-health-server {
+        address = "0.0.0.0"
+        port = {{ canton.participant.ports.http_health_port }}
       }
       storage {
         type = postgres

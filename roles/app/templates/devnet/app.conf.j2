@@ -25,8 +25,11 @@ canton {
       }
       participant-client = {
         admin-api = {
-          address = localhost
-          port = {{ canton.participant.ports.admin_port }}
+          client-config = {
+            address = localhost
+            port = {{ canton.participant.ports.admin_port }}
+          }
+          auth-config.type = "none"
         }
         ledger-api = {
           client-config = {

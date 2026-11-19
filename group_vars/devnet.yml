@@ -3,16 +3,21 @@
 canton:
   migration_id: "1"
   participant:
-    version: 0.9.3
-    jar_ext: "open-source-3.6.3"
+    version: 0.10.2
+    jar_ext: "open-source-3.7.3"
     # LEDGER_API_ADMIN_USER
     admin_user_id: "YAn59YABoqHGsDV5XVst3ge30YYUb9cs@clients"
     # AUTH_JWKS_URL
     auth_jwks_url: "https://dev-coqploudjmtrcag8.us.auth0.com/.well-known/jwks.json"
     # LEDGER_API_AUTH_AUDIENCE
     target_audience: https://canton.network.global
+    # Splice 0.10.0 disables these by default. Both are off unless set here (or, for repair, recover_validator=true)
+    # enable_key_download: needed for participant identities dumps/backups (canton.parameters.enable-key-download)
+    enable_key_download: false
+    # enable_repair_commands: needed only to restore from an identities dump or run repair commands (ACS import)
+    enable_repair_commands: false
   app:
-    version: 0.9.3
+    version: 0.10.2
     # SPLICE_APP_VALIDATOR_LEDGER_API_AUTH_URL
     auth_wellknown_url: "https://dev-coqploudjmtrcag8.us.auth0.com/.well-known/openid-configuration"
     # SPLICE_APP_VALIDATOR_LEDGER_API_AUTH_CLIENT_ID
@@ -34,7 +39,7 @@ canton:
     # SPLICE_APP_VALIDATOR_PARTICIPANT_IDENTIFIER
     participant_id: "Encapsulate-Devnet-3"
   wallet:
-    version: 0.9.3
+    version: 0.10.2
     auth_url: "https://dev-coqploudjmtrcag8.us.auth0.com"
     client_id: WiKQWSGTL2SUXhJLsX62R9xY5SjC0um8
     network_name: "Canton Network"
@@ -44,7 +49,7 @@ canton:
     service_name: "Canton Name Service"
     service_acronym: "CNS"
   cns:
-    version: 0.9.3
+    version: 0.10.2
     auth_url: "https://dev-coqploudjmtrcag8.us.auth0.com"
     client_id: gYozCVaFrD57RJr7m58haoWvUd1JTS7O
     wallet_ui_url: "https://wallet.devnet.canton.encapsulate.xyz"
